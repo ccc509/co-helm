@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-export const History: React.FC = () => {
+const History: React.FC = () => {
   const [predictions, setPrediction] = useState<Prediction[]>([]);
 
   useEffect(() => {
@@ -57,3 +57,5 @@ export const History: React.FC = () => {
     </Box>
   );
 };
+
+export default History;

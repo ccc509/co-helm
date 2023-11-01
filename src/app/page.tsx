@@ -1,18 +1,32 @@
 "use client";
 
-import { SnackbarProvider } from "notistack";
-import { Routes } from "./Routes";
+import { URLS } from "@/utils/urls";
+import { Box, Button, Stack } from "@mui/material";
+import { useRouter } from "next/navigation";
+import React from "react";
 
-export default function Home() {
+const Home: React.FC = () => {
+  const router = useRouter();
+
   return (
-    <SnackbarProvider
-      maxSnack={3}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "center",
+    <Box
+      pt={4}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
-      <Routes />
-    </SnackbarProvider>
+      <Stack spacing={2}>
+        <Button variant="contained" onClick={() => router.push(URLS.UPLOAD)}>
+          Upload
+        </Button>
+        <Button variant="contained" onClick={() => router.push(URLS.HISTORY)}>
+          Check History
+        </Button>
+      </Stack>
+    </Box>
   );
-}
+};
+
+export default Home;

@@ -1,17 +1,19 @@
+"use client";
+
 import { uploadFiles } from "@/api/services/files";
 import { uploadGuideline } from "@/api/services/guideline";
 import { URLS } from "@/utils/urls";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import { enqueueSnackbar } from "notistack";
+import { useRouter } from "next/navigation";
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import FileUpload from "react-material-file-upload";
-import { useNavigate } from "react-router-dom";
 
-export const Upload: React.FC = () => {
+const Upload: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [uploaded, setUploaded] = useState<boolean>(false);
   const [guideline, setGuideline] = useState<string>("");
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const submit = async () => {
     try {
@@ -23,7 +25,7 @@ export const Upload: React.FC = () => {
         variant: "success",
       });
       setUploaded(true);
-      navigate(URLS.HISTORY);
+      router.push(URLS.HISTORY);
     } catch (error) {
       enqueueSnackbar("Unable to upload guideline", {
         variant: "error",
@@ -55,37 +57,47 @@ export const Upload: React.FC = () => {
   }, [files]);
 
   return (
-    <Box
-      pt={8}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+    <SnackbarProvider
+      maxSnack={3}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "center",
       }}
     >
-      {!uploaded && <FileUpload value={files} onChange={setFiles} />}
-      {uploaded && (
-        <Stack spacing={2}>
-          <Typography variant="h5">File uploaded</Typography>
-          <TextField
-            multiline
-            placeholder="Guideline"
-            rows={10}
-            value={guideline}
-            onChange={(e) => setGuideline(e.target.value)}
-          />
-        </Stack>
-      )}
-      <Box pt={4}>
-        <Button
-          onClick={submit}
-          variant="contained"
-          disabled={!uploaded || !guideline.length}
-        >
-          Submit
-        </Button>
+      <Box
+        pt={8}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {!uploaded && <FileUpload value={files} onChange={setFiles} />}
+        {uploaded && (
+          <Stack spacing={2}>
+            <Typography variant="h5">File uploaded</Typography>
+            <TextField
+              multiline
+              placeholder="Guideline"
+              rows={10}
+              value={guideline}
+              onChange={(e) => setGuideline(e.target.value)}
+            />
+          </Stack>
+        )}
+        <Box pt={4}>
+          <Button
+            onClick={submit}
+            variant="contained"
+            disabled={!uploaded || !guideline.length}
+          >
+            Submit
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </SnackbarProvider>
   );
 };
+
+export default Upload;
