@@ -23,7 +23,7 @@ export const History: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <Box p={2}>
       <Typography variant="h5">History</Typography>
       {predictions.map((p) => {
         return (
@@ -54,6 +54,6 @@ export const History: React.FC = () => {
           </Box>
         );
       })}
-    </>
+    </Box>
   );
 };
