@@ -4,6 +4,10 @@
 
 Open [https://co-helm.vercel.app/](https://co-helm.vercel.app/) with your browser to see the deployed application.
 
+## Demo video
+
+https://github.com/ccc509/co-helm/assets/29049547/96dd540b-04c7-45d0-b426-dfd7b42b1a63
+
 ## Backend
 
 You can find the source code of the backend in another repository
